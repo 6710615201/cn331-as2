@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}รายการห้อง{% endblock %}
+{% block content %}
+<form class="row g-2 mb-3" method="get">
+  <div class="col-sm-6"><input class="form-control" name="q" value="{{ q }}" placeholder="ค้นหาชื่อห้องหรือสถานที่"></div>
+  <div class="col-auto"><button class="btn btn-secondary">ค้นหา</button></div>
+</form>
+<div class="row g-3">
+  {% for r in rooms %}
+  <div class="col-md-4">
+    <div class="card h-100 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">{{ r.name }}</h5>
+        <div class="text-secondary">ความจุ {{ r.capacity }} คน • {{ r.location }}</div>
+        <a class="btn btn-primary btn-sm mt-3" href="{% url 'room_detail' r.id %}">รายละเอียด</a>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <p>ไม่มีห้อง</p>
+  {% endfor %}
+</div>
+{% endblock %}

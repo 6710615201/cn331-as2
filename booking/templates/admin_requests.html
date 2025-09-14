@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}จัดการคำขอ{% endblock %}
+{% block content %}
+<h3 class="h5 mb-3">คำขอรออนุมัติ</h3>
+<ul class="list-group">
+  {% for x in items %}
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    <div>{{ x.user.username }} • {{ x.room.name }} • {{ x.start_at|date:"d/m H:i" }}–{{ x.end_at|date:"H:i" }}</div>
+    <div class="d-flex gap-2">
+      <form method="post">{% csrf_token %}
+        <input type="hidden" name="pk" value="{{ x.id }}">
+        <input type="hidden" name="action" value="approve">
+        <button class="btn btn-success btn-sm">อนุมัติ</button>
+      </form>
+      <form method="post">{% csrf_token %}
+        <input type="hidden" name="pk" value="{{ x.id }}">
+        <input type="hidden" name="action" value="reject">
+        <button class="btn btn-outline-danger btn-sm">ปฏิเสธ</button>
+      </form>
+    </div>
+  </li>
+  {% empty %}
+  <li class="list-group-item">ไม่มีคำขอรออนุมัติ</li>
+  {% endfor %}
+</ul>
+{% endblock %}

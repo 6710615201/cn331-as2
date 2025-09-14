@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}ยืนยันยกเลิก{% endblock %}
+{% block content %}
+<div class="card p-3 shadow-sm">
+  <p>ต้องการยกเลิกการจอง {{ item.room.name }} วันที่ {{ item.start_at|date:"d/m H:i" }} ใช่หรือไม่</p>
+  <form method="post">{% csrf_token %}<button class="btn btn-danger">ยืนยัน</button> <a class="btn btn-secondary" href="{% url 'my_bookings' %}">ย้อนกลับ</a></form>
+</div>
+{% endblock %}

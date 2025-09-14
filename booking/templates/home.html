@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}หน้าแรก{% endblock %}
+{% block content %}
+<div class="p-4 p-sm-5 card border-0 shadow glass">
+  <h1 class="h3 fw-semibold mb-2">ระบบจองห้องเรียน</h1>
+  <p class="text-secondary">สมัคร ล็อกอิน จอง ยกเลิก ดูรายการของตนได้ ผู้ดูแลอนุมัติคำขอในหน้าแอดมิน</p>
+  <div class="d-flex gap-2">
+    {% if user.is_authenticated and not user.is_staff %}
+    <a class="btn btn-primary" href="{% url 'rooms' %}">ดูห้อง</a>
+    <a class="btn btn-outline-primary" href="{% url 'reserve_new' %}">จองทันที</a>
+    {% elif user.is_authenticated and user.is_staff %}
+    <a class="btn btn-primary" href="{% url 'admin_requests' %}">จัดการคำขอ</a>
+    {% else %}
+    <a class="btn btn-primary" href="{% url 'rooms' %}">ดูห้อง</a>
+    {% endif %}
+  </div>
+</div>
+{% if user.is_authenticated and not user.is_staff %}
+<h4 class="mt-4">การจองล่าสุดของฉัน</h4>
+<ul class="list-group">
+  {% for x in my_res %}
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    <span>{{ x.room.name }} • {{ x.start_at|date:"d/m H:i" }}–{{ x.end_at|date:"H:i" }}</span>
+    <span class="badge bg-{% if x.status == 'approved' %}success{% elif x.status == 'pending' %}warning text-dark{% else %}secondary{% endif %}">{{ x.status }}</span>
+  </li>
+  {% empty %}
+  <li class="list-group-item">ยังไม่มีการจอง</li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

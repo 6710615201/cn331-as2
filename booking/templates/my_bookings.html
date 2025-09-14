@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}ของฉัน{% endblock %}
+{% block content %}
+<h3 class="h5 mb-3">การจองของฉัน</h3>
+<ul class="list-group">
+  {% for x in items %}
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    <div>{{ x.room.name }} • {{ x.start_at|date:"d/m H:i" }}–{{ x.end_at|date:"H:i" }} • {{ x.status }}</div>
+    {% if x.status != 'rejected' %}
+    <form method="post" action="{% url 'cancel_booking' x.id %}">{% csrf_token %}<button class="btn btn-outline-danger btn-sm">ยกเลิก</button></form>
+    {% endif %}
+  </li>
+  {% empty %}
+  <li class="list-group-item">ยังไม่มีรายการ</li>
+  {% endfor %}
+</ul>
+{% endblock %}
