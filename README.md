@@ -11,3 +11,6 @@
 
 # ฟังชั่นเพิ่มเติม
 -ค้นหาสถานที่ของห้องเรียนและชื่อห้องได้
+
+## 🎥 Demo Video
+[![Watch the video](https://img.shields.io/badge/▶️-Watch%20Demo-blue?style=for-the-badge)](https://drive.google.com/file/d/1YxcZuHHxAMxYUJTmLyBYBes-kkwIFKO8/view?usp=drive_link)
