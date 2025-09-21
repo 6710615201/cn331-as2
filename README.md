@@ -1,5 +1,5 @@
 # Booking Room 331
-## CN331 Assignment 3 – Classroom Booking
+## CN331 Assignment 2 – Classroom Booking
 
 # Login System -- 1.admin 2.user
 - Admin -- จัดการห้องเรียนผ่าน Django Admin Interface
@@ -13,8 +13,6 @@
 -ค้นหาสถานที่ของห้องเรียนและชื่อห้องได้
 
 ## 🎥 Demo Video
-[![กดเพื่อดูวิดีโอ](https://img.shields.io/badge/▶️-Watch%20Demo-blue?style=for-the-badge)](https://drive.google.com/file/d/15qgMbOMGluiRCPYWngTBzECKm2zhGjba/view?usp=drive_link)
+[![กดเพื่อดูวิดีโอ](https://img.shields.io/badge/▶️-Watch%20Demo-blue?style=for-the-badge)](https://drive.google.com/file/d/1YxcZuHHxAMxYUJTmLyBYBes-kkwIFKO8/view?usp=drive_link)
 
-## Web app link
-[เยี่ยมชมเว็บไซต์ของเรา](https://cn331-as2-vh3b.onrender.com/)
 
