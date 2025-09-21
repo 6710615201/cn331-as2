@@ -1,11 +1,14 @@
 from pathlib import Path
 import os
+import dj_database_url   # ✅ ต้องเพิ่ม
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-cn331-reserve-key'
-DEBUG = True  # เวลา deploy จริง แนะนำเปลี่ยนเป็น False
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-cn331-reserve-key')
+DEBUG = os.environ.get('DEBUG', 'True') == 'True'
+
 ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = ['https://*.onrender.com']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -19,7 +22,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # ✅ ต้องเพิ่มตรงนี้
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # ✅ เสิร์ฟ static
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -48,13 +51,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
+# ========== Database ==========
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3'
-    }
+    "default": dj_database_url.config(
+        default=f"sqlite:///{BASE_DIR/'db.sqlite3'}",  # ใช้ SQLite ถ้าไม่เจอ DATABASE_URL
+        conn_max_age=600,
+        ssl_require=False  # ถ้า external ต่อไม่ได้ ลองเปลี่ยนเป็น True
+    )
 }
 
+# ========== Auth ==========
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -67,7 +73,7 @@ TIME_ZONE = 'Asia/Bangkok'
 USE_I18N = True
 USE_TZ = True
 
-# ==== Static Files Config (สำคัญสำหรับ Render) ====
+# ========== Static ==========
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'booking' / 'static'] if (BASE_DIR / 'booking' / 'static').exists() else []
 STATIC_ROOT = BASE_DIR / 'staticfiles'
