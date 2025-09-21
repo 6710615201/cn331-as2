@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 {% block title %}จองห้อง{% endblock %}
 {% block content %}
-<h3 class="h5 mb-3">จองห้อง</h3>
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h3 class="h5 m-0">จองห้อง</h3>
+  {% if user.is_staff %}
+  <a class="btn btn-dark btn-sm" href="/admin/">ไปหน้าแอดมิน</a>
+  {% endif %}
+</div>
 {% if error %}<div class="alert alert-danger">{{ error }}</div>{% endif %}
 <form method="post" class="card p-3 shadow-sm">{% csrf_token %}
   {{ form.as_p }}
