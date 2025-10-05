@@ -1,0 +1,36 @@
+name: Testing
+
+on:
+  push:
+    branches: [ testing ]
+  pull_request:
+    branches: [ testing ]
+
+jobs:
+  test_project:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🧩 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 📦 Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install coverage
+
+      - name: 🧱 Run Django migrations
+        run: |
+          python manage.py makemigrations
+          python manage.py migrate
+
+      - name: 🧪 Run Django unit tests with coverage
+        run: |
+          coverage run --source='.' manage.py test
+          coverage report
